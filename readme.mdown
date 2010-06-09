@@ -1,0 +1,9 @@
+# Overview
+Provides a simplified method of accessing cassandra on top of the hector API. 
+
+Take a look at CassandraTemplateTest for some examples.
+
+# TODO
+* add some actual examples
+* more documentation
+
