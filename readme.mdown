@@ -1,9 +1,11 @@
 # Overview
-Provides a simplified method of accessing cassandra on top of the hector API. 
+Provides a simplified method of accessing cassandra on top of the hector API
+as well as some examples and numerous utilities.
 
-Take a look at CassandraTemplateTest for some examples.
+The classes in com.vrvm.cassandra.hector.example package can all be executed
+from maven via the following command:
+mvn -e exec:java -Dexec.mainClass="com.vrvm.cassandra.hector.example.[class name]"
 
 # TODO
-* add some actual examples
 * more documentation
 
