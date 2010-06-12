@@ -129,7 +129,7 @@ public class CassandraTemplate implements CassandraOperations {
     @Override
     public <T> T execute(CassandraCallback<T> cassandraCallback) throws CassandraAccessException {
         CassandraClient c = null;
-        Keyspace ks; 
+        Keyspace ks = null; 
         try {
             c = cassandraClientPool.borrowClient();
             ks = c.getKeyspace(keyspace, consistencyLevel);
@@ -138,7 +138,7 @@ public class CassandraTemplate implements CassandraOperations {
             throw new CassandraAccessException("Could not execute operation", e);        
         } finally {
             try {
-                cassandraClientPool.releaseClient(c);
+                cassandraClientPool.releaseClient(ks.getClient());
             } catch (Exception e) {
                 log.error("Could not release client",e);
             }
