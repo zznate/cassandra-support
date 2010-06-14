@@ -55,7 +55,8 @@ public class GetRangeSlicesKeysOnly {
             sp.setColumn_names(new ArrayList<byte[]>());
             KeyRange keyRange = new KeyRange();
             keyRange.setCount(10);
-            keyRange.setStart_key("");
+            // prefix matching is okay here regardless of partitioner
+            keyRange.setStart_key("fake_key_");
             keyRange.setEnd_key("");
             Map<String, List<Column>> results = keyspace.getRangeSlices(columnParent, sp, keyRange);
             Set<String> keySet = results.keySet();

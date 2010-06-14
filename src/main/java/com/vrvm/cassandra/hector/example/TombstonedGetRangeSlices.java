@@ -5,7 +5,6 @@ import static me.prettyprint.cassandra.utils.StringUtils.bytes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import me.prettyprint.cassandra.service.CassandraClient;
 import me.prettyprint.cassandra.service.CassandraClientPool;
@@ -14,6 +13,7 @@ import me.prettyprint.cassandra.service.Keyspace;
 import me.prettyprint.cassandra.utils.StringUtils;
 
 import org.apache.cassandra.thrift.Column;
+import org.apache.cassandra.thrift.ColumnOrSuperColumn;
 import org.apache.cassandra.thrift.ColumnParent;
 import org.apache.cassandra.thrift.ColumnPath;
 import org.apache.cassandra.thrift.KeyRange;
@@ -39,15 +39,18 @@ public class TombstonedGetRangeSlices {
             keyspace = client.getKeyspace("Keyspace1");
             // Insert 10 rows with 3 columns each of dummy data
             ColumnPath cp = new ColumnPath("Standard1");
-            for (int i = 0; i < 10; i++) {                
+            List<String> keySet = new ArrayList<String>(10);
+            for (int i = 0; i < 10; i++) {          
+                String key = "fake_key_" + i;
                 cp.setColumn(bytes("fake_column_0"));
-                keyspace.insert("fake_key_"+i, cp, bytes("fake_value_0_" + i));
+                keyspace.insert(key, cp, bytes("fake_value_0_" + i));
                 
                 cp.setColumn(bytes("fake_column_1"));                
-                keyspace.insert("fake_key_"+i, cp, bytes("fake_value_1_" + i));
+                keyspace.insert(key, cp, bytes("fake_value_1_" + i));
                 
                 cp.setColumn(bytes("fake_column_2"));
-                keyspace.insert("fake_key_"+i, cp, bytes("fake_value_2_" + i));
+                keyspace.insert(key, cp, bytes("fake_value_2_" + i));
+                keySet.add(key);
             }
             cp.unsetColumn();
             // now delete the odd rows
@@ -58,16 +61,9 @@ public class TombstonedGetRangeSlices {
             
             ColumnParent columnParent = new ColumnParent("Standard1");                
             SlicePredicate sp = new SlicePredicate();
-            sp.addToColumn_names(StringUtils.bytes("fake_column_0"));
-            sp.addToColumn_names(StringUtils.bytes("fake_column_1"));
-            sp.addToColumn_names(StringUtils.bytes("fake_column_2"));
-            
-            KeyRange keyRange = new KeyRange();
-            keyRange.setCount(10);
-            keyRange.setStart_key("");
-            keyRange.setEnd_key("");
-            Map<String, List<Column>> results = keyspace.getRangeSlices(columnParent, sp, keyRange);
-            Set<String> keySet = results.keySet();
+            sp.addToColumn_names(StringUtils.bytes("fake_column_"));
+           
+            Map<String, List<Column>> results = keyspace.multigetSlice(keySet, columnParent, sp);            
             
             // setup slicing and predicate for the verification query
             SliceRange sliceRange = new SliceRange(new byte[0], new byte[0], false, 3);
@@ -94,11 +90,9 @@ public class TombstonedGetRangeSlices {
                 } catch (NotFoundException nfe) {
                     System.out.println("|-- try the first column via getColumn: [a NotFoundException was caught]");
                 }
-                System.out.println("|-- verify on CLI with: get Keyspace1.Standard1['" + key + "'] ");
-                
+                System.out.println("|-- verify on CLI with: get Keyspace1.Standard1['" + key + "'] ");                
             }
-            // how to verify?
-            //System.out.println("Verify on CLI with:  get Keyspace1.Standard1['jsmith'] ");
+            // 
 
         } finally {
             pool.releaseClient(keyspace.getClient());
