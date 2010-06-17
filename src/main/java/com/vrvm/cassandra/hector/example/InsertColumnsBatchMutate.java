@@ -20,6 +20,9 @@ import org.apache.cassandra.thrift.SliceRange;
  * get_slice method is then used with a SliceRange and SlicePredicate
  * to retrieve the rows.
  *  
+ * To run this example from maven:
+ * mvn -e exec:java -Dexec.mainClass="com.vrvm.cassandra.hector.example.InsertColumnsBatchMutate"
+ * 
  * @author zznate
  *
  */

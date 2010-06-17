@@ -12,6 +12,15 @@ import org.apache.cassandra.thrift.Column;
 import org.apache.cassandra.thrift.ColumnPath;
 import org.apache.cassandra.thrift.SuperColumn;
 
+/**
+ * Like {@link InsertSingleColumn} except with a SuperColumn 
+ * 
+ * To run this example from maven:
+ * mvn -e exec:java -Dexec.mainClass="com.vrvm.cassandra.hector.example.InsertSuperColumn"
+ * 
+ * @author zznate
+ *
+ */
 public class InsertSuperColumn {
     public static void main(String[] args) throws Exception {
         
@@ -26,7 +35,7 @@ public class InsertSuperColumn {
             columnPath.setSuper_column(StringUtils.bytes("jsmith"));
             keyspace.insert("billing", columnPath, StringUtils.bytes("John"));            
                         
-            SuperColumn sc = keyspace.getSuperColumn("admins", columnPath);            
+            SuperColumn sc = keyspace.getSuperColumn("billing", columnPath);            
             Iterator<Column> columnIterator = sc.getColumnsIterator();
             
             while(columnIterator.hasNext()) {
@@ -37,7 +46,7 @@ public class InsertSuperColumn {
                         + StringUtils.string(column.getName()) 
                         + " val:" + StringUtils.string(column.getValue()));
             }
-            System.out.println("Verify on CLI with:  get Keyspace1.Super1['admins']['jsmith'] ");
+            System.out.println("Verify on CLI with:  get Keyspace1.Super1['billing']['jsmith'] ");
 
         } finally {
             pool.releaseClient(keyspace.getClient());

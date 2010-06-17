@@ -16,6 +16,9 @@ import org.apache.cassandra.thrift.SlicePredicate;
  * Uses BatchMutation object to delete 2 of the 3 rows inserted from the
  * {@link InsertColumnsBatchMutate} example, leaving only the "first" column.
  * 
+ * To run this example from maven:
+ * mvn -e exec:java -Dexec.mainClass="com.vrvm.cassandra.hector.example.DeleteBatchMutate"
+ * 
  * @author zznate
  *
  */

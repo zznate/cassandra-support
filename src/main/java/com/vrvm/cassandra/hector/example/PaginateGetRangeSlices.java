@@ -23,6 +23,9 @@ import org.apache.cassandra.thrift.SliceRange;
  * A simple example showing what it takes to page over results using
  * get_range_slices.
  * 
+ * To run this example from maven:
+ * mvn -e exec:java -Dexec.mainClass="com.vrvm.cassandra.hector.example.PaginateGetRangeSlices"
+ * 
  * @author zznate
  *
  */

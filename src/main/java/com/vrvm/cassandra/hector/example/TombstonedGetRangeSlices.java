@@ -21,6 +21,9 @@ import org.apache.cassandra.thrift.SliceRange;
  * Shows what tombstoned data looks like in the result sets of 
  * get_range_slices and get_slice 
  * 
+ * To run this example from maven:
+ * mvn -e exec:java -Dexec.mainClass="com.vrvm.cassandra.hector.example.TombstonedGetRangeSlices"
+ *  
  * @author zznate
  *
  */

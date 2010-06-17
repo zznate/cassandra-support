@@ -22,7 +22,10 @@ import org.apache.cassandra.thrift.SliceRange;
  * Use get_range_slices to retrieve the keys without deserializing the columns.
  * For clear results, it's best to run this on an empty ColumnFamily.
  * 
- * @author nate
+ * To run this example from maven:
+ * mvn -e exec:java -Dexec.mainClass="com.vrvm.cassandra.hector.example.GetRangeSlicesKeysOnly"
+ * 
+ * @author zznate
  *
  */
 public class GetRangeSlicesKeysOnly {
