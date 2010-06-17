@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import me.prettyprint.cassandra.model.HectorException;
 import me.prettyprint.cassandra.service.CassandraClient;
 import me.prettyprint.cassandra.service.CassandraClientPool;
 import me.prettyprint.cassandra.service.CassandraClientPoolFactory;
@@ -13,10 +14,8 @@ import me.prettyprint.cassandra.service.Keyspace;
 import me.prettyprint.cassandra.utils.StringUtils;
 
 import org.apache.cassandra.thrift.Column;
-import org.apache.cassandra.thrift.ColumnOrSuperColumn;
 import org.apache.cassandra.thrift.ColumnParent;
 import org.apache.cassandra.thrift.ColumnPath;
-import org.apache.cassandra.thrift.KeyRange;
 import org.apache.cassandra.thrift.NotFoundException;
 import org.apache.cassandra.thrift.SlicePredicate;
 import org.apache.cassandra.thrift.SliceRange;
@@ -87,7 +86,7 @@ public class TombstonedGetRangeSlices {
                 System.out.println("|-- called directly via get_slice, the value is: " +keyspace.getSlice(key, columnParent, slicePredicate));
                 try {
                     System.out.println("|-- try the first column via getColumn: " + keyspace.getColumn(key, verifyColumnPath));
-                } catch (NotFoundException nfe) {
+                } catch (HectorException he) {
                     System.out.println("|-- try the first column via getColumn: [a NotFoundException was caught]");
                 }
                 System.out.println("|-- verify on CLI with: get Keyspace1.Standard1['" + key + "'] ");                

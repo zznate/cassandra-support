@@ -4,7 +4,6 @@ import me.prettyprint.cassandra.service.CassandraClient;
 import me.prettyprint.cassandra.service.CassandraClientPool;
 import me.prettyprint.cassandra.service.CassandraClientPoolFactory;
 import me.prettyprint.cassandra.service.Keyspace;
-import me.prettyprint.cassandra.service.PoolExhaustedException;
 import me.prettyprint.cassandra.utils.StringUtils;
 
 import org.apache.cassandra.thrift.Column;

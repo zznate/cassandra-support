@@ -71,8 +71,6 @@ public class GetRangeSlicesKeysOnly {
                 System.out.println("|-- called directly via get_slice, the value is: " +keyspace.getSlice(key, columnParent, slicePredicate));
                 System.out.println("|-- verify on CLI with: get Keyspace1.Standard1['" + key + "'] ");
             }
-            // how to verify?
-            //System.out.println("Verify on CLI with:  get Keyspace1.Standard1['jsmith'] ");
 
         } finally {
             pool.releaseClient(keyspace.getClient());
