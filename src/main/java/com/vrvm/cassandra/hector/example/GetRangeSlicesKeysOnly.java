@@ -1,8 +1,5 @@
 package com.vrvm.cassandra.hector.example;
 
-import static me.prettyprint.cassandra.utils.StringUtils.bytes;
-
-import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -40,14 +37,14 @@ public class GetRangeSlicesKeysOnly {
             // Insert 10 rows with 3 columns each of dummy data
             for (int i = 0; i < 10; i++) {
                 ColumnPath cp = new ColumnPath("Standard1");
-                cp.setColumn(bytes("fake_column_0"));
-                keyspace.insert("fake_key_"+i, cp, bytes("fake_value_0_" + i));
+                cp.setColumn(StringUtils.bytes("fake_column_0"));
+                keyspace.insert("fake_key_"+i, cp, StringUtils.bytes("fake_value_0_" + i));
                 
-                cp.setColumn(bytes("fake_column_1"));                
-                keyspace.insert("fake_key_"+i, cp, bytes("fake_value_1_" + i));
+                cp.setColumn(StringUtils.bytes("fake_column_1"));                
+                keyspace.insert("fake_key_"+i, cp, StringUtils.bytes("fake_value_1_" + i));
                 
-                cp.setColumn(bytes("fake_column_2"));
-                keyspace.insert("fake_key_"+i, cp, bytes("fake_value_2_" + i));
+                cp.setColumn(StringUtils.bytes("fake_column_2"));
+                keyspace.insert("fake_key_"+i, cp, StringUtils.bytes("fake_value_2_" + i));
             }
             
             ColumnParent columnParent = new ColumnParent("Standard1");                

@@ -1,10 +1,8 @@
 package com.vrvm.cassandra.hector.example;
 
-import static me.prettyprint.cassandra.utils.StringUtils.bytes;
+import me.prettyprint.cassandra.utils.StringUtils;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +11,6 @@ import me.prettyprint.cassandra.service.CassandraClient;
 import me.prettyprint.cassandra.service.CassandraClientPool;
 import me.prettyprint.cassandra.service.CassandraClientPoolFactory;
 import me.prettyprint.cassandra.service.Keyspace;
-import me.prettyprint.cassandra.utils.StringUtils;
 
 import org.apache.cassandra.thrift.Column;
 import org.apache.cassandra.thrift.ColumnParent;
@@ -22,6 +19,13 @@ import org.apache.cassandra.thrift.KeyRange;
 import org.apache.cassandra.thrift.SlicePredicate;
 import org.apache.cassandra.thrift.SliceRange;
 
+/**
+ * A simple example showing what it takes to page over results using
+ * get_range_slices.
+ * 
+ * @author zznate
+ *
+ */
 public class PaginateGetRangeSlices {
     public static void main(String[] args) throws Exception {
         
@@ -33,14 +37,14 @@ public class PaginateGetRangeSlices {
             // Insert 20 rows with 3 columns each of dummy data
             for (int i = 0; i < 20; i++) {
                 ColumnPath cp = new ColumnPath("Standard1");
-                cp.setColumn(bytes("fake_column_0"));
-                keyspace.insert("fake_key_"+i, cp, bytes("fake_value_0_" + i));
+                cp.setColumn(StringUtils.bytes("fake_column_0"));
+                keyspace.insert("fake_key_"+i, cp, StringUtils.bytes("fake_value_0_" + i));
                 
-                cp.setColumn(bytes("fake_column_1"));                
-                keyspace.insert("fake_key_"+i, cp, bytes("fake_value_1_" + i));
+                cp.setColumn(StringUtils.bytes("fake_column_1"));                
+                keyspace.insert("fake_key_"+i, cp, StringUtils.bytes("fake_value_1_" + i));
                 
-                cp.setColumn(bytes("fake_column_2"));
-                keyspace.insert("fake_key_"+i, cp, bytes("fake_value_2_" + i));
+                cp.setColumn(StringUtils.bytes("fake_column_2"));
+                keyspace.insert("fake_key_"+i, cp, StringUtils.bytes("fake_value_2_" + i));
             }
             
             ColumnParent columnParent = new ColumnParent("Standard1");                

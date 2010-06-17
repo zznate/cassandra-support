@@ -1,7 +1,5 @@
 package com.vrvm.cassandra.hector.example;
 
-import static me.prettyprint.cassandra.utils.StringUtils.bytes;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +14,6 @@ import me.prettyprint.cassandra.utils.StringUtils;
 import org.apache.cassandra.thrift.Column;
 import org.apache.cassandra.thrift.ColumnParent;
 import org.apache.cassandra.thrift.ColumnPath;
-import org.apache.cassandra.thrift.NotFoundException;
 import org.apache.cassandra.thrift.SlicePredicate;
 import org.apache.cassandra.thrift.SliceRange;
 
@@ -41,14 +38,14 @@ public class TombstonedGetRangeSlices {
             List<String> keySet = new ArrayList<String>(10);
             for (int i = 0; i < 10; i++) {          
                 String key = "fake_key_" + i;
-                cp.setColumn(bytes("fake_column_0"));
-                keyspace.insert(key, cp, bytes("fake_value_0_" + i));
+                cp.setColumn(StringUtils.bytes("fake_column_0"));
+                keyspace.insert(key, cp, StringUtils.bytes("fake_value_0_" + i));
                 
-                cp.setColumn(bytes("fake_column_1"));                
-                keyspace.insert(key, cp, bytes("fake_value_1_" + i));
+                cp.setColumn(StringUtils.bytes("fake_column_1"));                
+                keyspace.insert(key, cp, StringUtils.bytes("fake_value_1_" + i));
                 
-                cp.setColumn(bytes("fake_column_2"));
-                keyspace.insert(key, cp, bytes("fake_value_2_" + i));
+                cp.setColumn(StringUtils.bytes("fake_column_2"));
+                keyspace.insert(key, cp, StringUtils.bytes("fake_value_2_" + i));
                 keySet.add(key);
             }
             cp.unsetColumn();
